@@ -1,5 +1,5 @@
 {
-  "name": "deflou/describer",
+  "name": "deflou/service-describer",
   "description": "Service describer interface and abstract realization",
   "authors": [
     {
@@ -8,7 +8,8 @@
     }
   ],
   "require": {
-    "deflou/service-config": "*"
+    "deflou/service-config": "*",
+    "deflou/service-activities": "*"
   },
   "autoload": {
     "psr-4": {

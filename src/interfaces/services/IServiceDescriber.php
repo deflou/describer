@@ -70,7 +70,7 @@ interface IServiceDescriber
      *
      * @return IServiceOptionConfigured
      */
-    public function getOption($optionName): IServiceOptionConfigured;
+    public function getServiceOption($optionName): IServiceOptionConfigured;
     
     /**
      * @return IServiceEvent[]

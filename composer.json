@@ -1,0 +1,18 @@
+{
+  "name": "deflou/describer",
+  "description": "Service describer interface and abstract realization",
+  "authors": [
+    {
+      "name": "DeFlou developer",
+      "email": "deflou.dev@gmail.com"
+    }
+  ],
+  "require": {
+    "deflou/service-config": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "deflou\\": "src/"
+    }
+  }
+}

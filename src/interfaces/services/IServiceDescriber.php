@@ -26,9 +26,9 @@ interface IServiceDescriber
     public function setServiceConfig($config);
     
     /**
-     * @return array
+     * @return IServiceConfig
      */
-    public function getServiceConfig(): array;
+    public function getServiceConfig(): IServiceConfig;
     
     /**
      * @return string
@@ -56,12 +56,12 @@ interface IServiceDescriber
     public function getServiceResolver(): string;
     
     /**
-     * IServiceAuthor[]
+     * @return IServiceAuthor[]
      */
     public function getServiceAuthors(): array;
     
     /**
-     * IServiceOptionConfigured[]
+     * @return IServiceOptionConfigured[]
      */
     public function getServiceOptions(): array;
     
@@ -73,7 +73,7 @@ interface IServiceDescriber
     public function getOption($optionName): IServiceOptionConfigured;
     
     /**
-     * @return IServiceEvent
+     * @return IServiceEvent[]
      */
     public function getServiceEvents(): array;
     

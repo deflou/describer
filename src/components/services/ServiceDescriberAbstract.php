@@ -1,12 +1,20 @@
 <?php
-namespace deflou\components;
+namespace deflou\components\services;
 
-use deflou\interfaces\IServiceDescriber;
-use deflou\interfaces\IServiceConfig;
-use deflou\components\ServiceConfigBase;
+use deflou\interfaces\services\IServiceDescriber;
+use deflou\interfaces\services\IServiceConfig;
+use deflou\components\services\ServiceConfigBase;
 
+/**
+ * ServiceDescriberAbstract
+ */
 abstract class ServiceDescriberAbstract implements IServiceDescriber
 {
+    /**
+     * Base path to df.php (service configuration)
+     *
+     * @var string
+     */
     protected $basePath = __DIR__ . '/../../';
     
     /**
@@ -14,6 +22,9 @@ abstract class ServiceDescriberAbstract implements IServiceDescriber
      */
     protected $serviceConfig = null;
     
+    /**
+     * @return $this
+     */
     public function loadServiceConfig()
     {
         $configFullPath = $this->basePath . 'df.php';
@@ -33,9 +44,14 @@ abstract class ServiceDescriberAbstract implements IServiceDescriber
         return $this;
     }
     
+    /**
+     * @param array|IServiceConfig
+     * 
+     * @return $this
+     */
     public function setServiceConfig($config)
     {
-        $config = new ServiceConfigBase($config);
+        $config = is_object($config) && ($config instanceof IServiceConfig) ? $config : new ServiceConfigBase($config);
         
         if ($config->isNotValid()) {
             throw new \Exception('Service config is not valid: ' . $config->getErrors());

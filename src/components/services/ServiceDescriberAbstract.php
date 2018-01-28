@@ -151,7 +151,7 @@ abstract class ServiceDescriberAbstract implements IServiceDescriber
      * @return IServiceOptionConfigured
      * @throws \Exception
      */
-    public function getOption($optionName): IServiceOptionConfigured
+    public function getServiceOption($optionName): IServiceOptionConfigured
     {
         if ($this->getServiceConfig()->hasServiceOption($optionName)) {
             return new ServiceOptionConfigured($this->getServiceConfig()->getServiceOption($optionName));

@@ -6,7 +6,7 @@ Service describer for DeFlou.
 ## via composer
 
 ```
-composer require deflou\service-describer "1.0"
+composer require deflou\service-describer "0.1.*"
 ```
 
 # using

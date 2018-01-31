@@ -1,9 +1,18 @@
 <?php
-namespace deflou\components\services;
+namespace deflou\components\services\describers;
 
-use deflou\interfaces\services\IServiceDescriber;
-use deflou\interfaces\services\IServiceConfig;
-use deflou\components\services\ServiceConfigBase;
+use deflou\components\services\activities\ServiceActionBase;
+use deflou\components\services\activities\ServiceEventBase;
+use deflou\components\services\authors\ServiceAuthorBase;
+use deflou\components\services\options\ServiceOptionConfigured;
+use deflou\interfaces\services\activities\IServiceAction;
+use deflou\interfaces\services\activities\IServiceEvent;
+use deflou\interfaces\services\authors\IServiceAuthor;
+use deflou\interfaces\services\describers\IServiceDescriber;
+use deflou\interfaces\services\configs\IServiceConfig;
+use deflou\components\services\configs\ServiceConfigBase;
+use deflou\interfaces\services\options\IServiceOptionConfigured;
+use deflou\interfaces\services\options\IServiceOptionDescribed;
 
 /**
  * ServiceDescriberAbstract
@@ -24,6 +33,7 @@ abstract class ServiceDescriberAbstract implements IServiceDescriber
     
     /**
      * @return $this
+     * @throws \Exception
      */
     public function loadServiceConfig()
     {
@@ -33,7 +43,7 @@ abstract class ServiceDescriberAbstract implements IServiceDescriber
             $serviceConfig = include $configFullPath;
             $config = new ServiceConfigBase($serviceConfig);
             if ($config->isNotValid()) {
-                throw new \Exception('Service config is not valid: ' . $config->getErrors());
+                throw new \Exception('Service config is not valid');
             }
             
             $this->serviceConfig = $config;
@@ -45,16 +55,17 @@ abstract class ServiceDescriberAbstract implements IServiceDescriber
     }
     
     /**
-     * @param array|IServiceConfig
+     * @param array|IServiceConfig $config
      * 
      * @return $this
+     * @throws \Exception
      */
     public function setServiceConfig($config)
     {
         $config = is_object($config) && ($config instanceof IServiceConfig) ? $config : new ServiceConfigBase($config);
         
         if ($config->isNotValid()) {
-            throw new \Exception('Service config is not valid: ' . $config->getErrors());
+            throw new \Exception('Service config is not valid');
         }
         
         $this->serviceConfig = $config;
@@ -165,7 +176,7 @@ abstract class ServiceDescriberAbstract implements IServiceDescriber
      */
     public function getServiceEvents(): array
     {
-        $eventsConfigs = $this->getConfig()->getServiceEvents();
+        $eventsConfigs = $this->getServiceConfig()->getServiceEvents();
         $events = [];
         
         foreach ($eventsConfigs as $eventConfig) {
@@ -180,11 +191,11 @@ abstract class ServiceDescriberAbstract implements IServiceDescriber
      */
     public function getServiceActions(): array
     {
-        $actionsConfigs = $this->getConfig()->getServiceActions();
+        $actionsConfigs = $this->getServiceConfig()->getServiceActions();
         $actions = [];
         
         foreach ($actionsConfigs as $actionConfig) {
-            $actions[] = new ServiceEventBase($actionConfig);
+            $actions[] = new ServiceActionBase($actionConfig);
         }
         
         return $actions;
@@ -200,6 +211,6 @@ abstract class ServiceDescriberAbstract implements IServiceDescriber
     {
         return method_exists($this, $optionName . 'Describe')
             ? $this->{$optionName . 'Describe'}($optionValue)
-            : new ServiceOptionDescribed($this->getOption($optionName), $optionValue);
+            : $this->getServiceOption($optionName)->describe($optionValue);
     }
 }

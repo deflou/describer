@@ -1,10 +1,10 @@
 <?php
-namespace deflou\interfaces\services;
+namespace deflou\interfaces\services\describers;
 
 use deflou\interfaces\services\options\IServiceOptionConfigured;
 use deflou\interfaces\services\options\IServiceOptionDescribed;
-use deflou\interfaces\services\IServiceConfig;
-use deflou\interfaces\services\IServiceAuthor;
+use deflou\interfaces\services\configs\IServiceConfig;
+use deflou\interfaces\services\authors\IServiceAuthor;
 use deflou\interfaces\services\activities\IServiceEvent;
 use deflou\interfaces\services\activities\IServiceAction;
 
@@ -88,5 +88,5 @@ interface IServiceDescriber
      *
      * @return IServiceOptionDescribed
      */
-    public function describeOption($optionName, $optionValue): IServiceOptionDescribed
+    public function describeOption($optionName, $optionValue): IServiceOptionDescribed;
 }

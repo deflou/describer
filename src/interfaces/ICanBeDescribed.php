@@ -6,6 +6,10 @@ namespace deflou\interfaces;
  */
 interface ICanBeDescribed
 {
+    const NAME = 'name';
+    const TITLE = 'title';
+    const DESCRIPTION = 'description';
+
     /**
      * @return string
      */
